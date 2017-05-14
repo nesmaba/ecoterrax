@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Representa el la estructura de las metas
+ * Representa el la estructura de los huertos
  * almacenadas en la base de datos
  */
 require 'Database.php';
 
-class Meta
+class Huerto
 {
     function __construct(){
     
     }
 
     /**
-     * Retorna en la fila especificada de la tabla 'meta'
+     * Retorna en la fila especificada de la tabla 'Huertos'
      *
-     * @param $idMeta Identificador del registro
+     * @param $idHuerto Identificador del registro
      * @return array Datos del registro
      */
     public static function getAll(){
@@ -34,7 +34,7 @@ class Meta
     }
 
     /**
-     * Obtiene los campos de una meta con un identificador
+     * Obtiene los campos de un huerto con un identificador
      * determinado
      *
      * @param $idHuerto Identificador del huerto
@@ -42,7 +42,7 @@ class Meta
      */
     public static function getById($idHuerto)
     {
-        // Consulta de la meta
+        // Consulta del huerto
         $consulta = "SELECT idHuerto,
                             nombre,
                             localizacion,
@@ -72,9 +72,9 @@ class Meta
      * en los nuevos valores relacionados con un identificador
      *
      * @param $idHuerto      identificador
-     * @param nombre      nuevo titulo
-     * @param localizacion nueva descripcion
-     * @param descripcion    nueva fecha limite de cumplimiento
+     * @param nombre      nuevo nombre
+     * @param localizacion nueva localización
+     * @param descripcion    nueva descripción
      * @return PDOStatement
      */
     public static function update(
@@ -101,38 +101,32 @@ class Meta
      * Insertar un nuevo huerto
      *
      * @param $idHuerto      identificador
-     * @param nombre         nuevo titulo
-     * @param localizacion   nueva descripcion
-     * @param descripcion    nueva fecha limite de cumplimiento
+     * @param nombre         nuevo nombre
+     * @param localizacion   nueva localización
+     * @param descripcion    nueva descripción
      * @return PDOStatement
      */
     public static function insert(
-        $titulo,
-        $descripcion,
-        $fechaLim,
-        $categoria,
-        $prioridad
+        $nombre,
+        $localizacion,
+        $descripcion
     )
     {
         // Sentencia INSERT
-        $comando = "INSERT INTO meta ( " .
-            "titulo," .
+        $comando = "INSERT INTO Huertos ( " .
+            "nombre," .
+            " localizacion," .
             " descripcion," .
-            " fechaLim," .
-            " categoria," .
-            " prioridad)" .
-            " VALUES( ?,?,?,?,?)";
+            " VALUES( ?,?,?)";
 
         // Preparar la sentencia
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
 
         return $sentencia->execute(
             array(
-                $titulo,
-                $descripcion,
-                $fechaLim,
-                $categoria,
-                $prioridad
+                $nombre,
+                $localizacion,
+                $descripcion
             )
         );
 
@@ -141,18 +135,18 @@ class Meta
     /**
      * Eliminar el registro con el identificador especificado
      *
-     * @param $idMeta identificador de la meta
+     * @param $idHuerto identificador del huerto
      * @return bool Respuesta de la eliminación
      */
-    public static function delete($idMeta)
+    public static function delete($idHuerto)
     {
         // Sentencia DELETE
-        $comando = "DELETE FROM meta WHERE idMeta=?";
+        $comando = "DELETE FROM Huertos WHERE idHuerto=?";
 
         // Preparar la sentencia
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
 
-        return $sentencia->execute(array($idMeta));
+        return $sentencia->execute(array($idHuerto));
     }
 }
 
