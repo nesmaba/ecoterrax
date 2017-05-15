@@ -46,7 +46,10 @@ class Huerto
         $consulta = "SELECT idHuerto,
                             nombre,
                             localizacion,
-                            descripcion
+                            descripcion,
+                            temperatura_ambiente,
+                            humedad_ambiente,
+                            humedad_huerto
                              FROM Huertos
                              WHERE idHuerto = ?";
 
@@ -75,24 +78,32 @@ class Huerto
      * @param nombre      nuevo nombre
      * @param localizacion nueva localización
      * @param descripcion    nueva descripción
+     * @param temperatura_ambiente temperatura del ambiente en tiempo real
+     * @param humedad_ambiente humedad del ambiente en tiempo real
+     * @param humedad_huerto humedad del huerto en tiempo real
      * @return PDOStatement
      */
     public static function update(
         $idHuerto,
         $nombre,
         $localizacion,
-        $descripcion
+        $descripcion,
+        $temperatura_ambiente,
+        $humedad_ambiente,
+        $humedad_huerto
     ){
         // Creando consulta UPDATE
         $consulta = "UPDATE Huertos" .
-            " SET nombre=?, localizacion=?, descripcion=? " .
+            " SET nombre=?, localizacion=?, descripcion=?, temperatura_ambiente=?"
+                . ", humedad_ambiente=?, humedad_huerto=?" .
             "WHERE idHuerto=?";
 
         // Preparar la sentencia
         $cmd = Database::getInstance()->getDb()->prepare($consulta);
 
         // Relacionar y ejecutar la sentencia
-        $cmd->execute(array($nombre, $localizacion, $descripcion, $idHuerto));
+        $cmd->execute(array($nombre, $localizacion, $descripcion, $temperatura_ambiente,
+                                $humedad_ambiente, $humedad_huerto, $idHuerto));
 
         return $cmd;
     }
@@ -104,12 +115,18 @@ class Huerto
      * @param nombre         nuevo nombre
      * @param localizacion   nueva localización
      * @param descripcion    nueva descripción
+     * @param temperatura_ambiente temperatura del ambiente en tiempo real
+     * @param humedad_ambiente humedad del ambiente en tiempo real
+     * @param humedad_huerto humedad del huerto en tiempo real
      * @return PDOStatement
      */
     public static function insert(
         $nombre,
         $localizacion,
-        $descripcion
+        $descripcion,
+        $temperatura_ambiente,
+        $humedad_ambiente,
+        $humedad_huerto
     )
     {
         // Sentencia INSERT
@@ -117,6 +134,9 @@ class Huerto
             "nombre," .
             " localizacion," .
             " descripcion," .
+            " temperatura_ambiente," .
+            " humedad_ambiente," .
+            " huerto_huerto," .                
             " VALUES( ?,?,?)";
 
         // Preparar la sentencia
@@ -126,7 +146,10 @@ class Huerto
             array(
                 $nombre,
                 $localizacion,
-                $descripcion
+                $descripcion,
+                $temperatura_ambiente,
+                $humedad_ambiente,
+                $humedad_huerto
             )
         );
 
