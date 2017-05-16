@@ -4,17 +4,17 @@
  * su identificador "idHuertos"
  */
 
-require 'Huertos.php';
+require 'Huerto.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
+    // Ejemplo de llamada http://localhost/EcoTerraX/Modelo/obtenerDetalleHuerto.php?idHuerto=2
     if (isset($_GET['idHuerto'])) {
-
+        // print_r($_GET['idHuerto']);
         // Obtener parámetro idHuertos
         $parametro = $_GET['idHuerto'];
 
         // Tratar retorno
-        $retorno = Huertos::getById($parametro);
+        $retorno = Huerto::getById($parametro);
 
 
         if ($retorno) {

@@ -8,7 +8,7 @@ require 'Riegos.php';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     // Manejar petición GET
-    $riegos = Riegos::getAll();
+    $riegos = Riego::getAll();
 
     if ($riegos) {
 
