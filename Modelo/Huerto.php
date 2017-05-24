@@ -49,7 +49,9 @@ class Huerto
                             descripcion,
                             temperatura_ambiente,
                             humedad_ambiente,
-                            humedad_huerto
+                            humedad_huerto,
+                            nivel_deposito_agua,
+                            total_riegos
                              FROM Huertos
                              WHERE idHuerto = ?";
 
@@ -81,6 +83,8 @@ class Huerto
      * @param temperatura_ambiente temperatura del ambiente en tiempo real
      * @param humedad_ambiente humedad del ambiente en tiempo real
      * @param humedad_huerto humedad del huerto en tiempo real
+     * @param nivel_deposito_agua nivel de agua del depósito en tiempo real
+     * @param total_riegos número total de riegos realizados en el huerto en tiempo real
      * @return PDOStatement
      */
     public static function update(
@@ -90,12 +94,15 @@ class Huerto
         $descripcion,
         $temperatura_ambiente,
         $humedad_ambiente,
-        $humedad_huerto
+        $humedad_huerto,
+        $nivel_deposito_agua,
+        $total_riegos
     ){
         // Creando consulta UPDATE
         $consulta = "UPDATE Huertos" .
             " SET nombre=?, localizacion=?, descripcion=?, temperatura_ambiente=?"
-                . ", humedad_ambiente=?, humedad_huerto=?" .
+                . ", humedad_ambiente=?, humedad_huerto=?, nivel_deposito_agua=?,"
+                . "total_riegos=?" .
             "WHERE idHuerto=?";
 
         // Preparar la sentencia
@@ -103,7 +110,8 @@ class Huerto
 
         // Relacionar y ejecutar la sentencia
         $cmd->execute(array($nombre, $localizacion, $descripcion, $temperatura_ambiente,
-                                $humedad_ambiente, $humedad_huerto, $idHuerto));
+                                $humedad_ambiente, $humedad_huerto, $nivel_deposito_agua,
+                                $total_riegos, $idHuerto));
 
         return $cmd;
     }
@@ -118,6 +126,8 @@ class Huerto
      * @param temperatura_ambiente temperatura del ambiente en tiempo real
      * @param humedad_ambiente humedad del ambiente en tiempo real
      * @param humedad_huerto humedad del huerto en tiempo real
+     * @param nivel_deposito_agua nivel de agua del depósito en tiempo real
+     * @param total_riegos número total de riegos realizados en el huerto en tiempo real
      * @return PDOStatement
      */
     public static function insert(
@@ -126,7 +136,9 @@ class Huerto
         $descripcion,
         $temperatura_ambiente,
         $humedad_ambiente,
-        $humedad_huerto
+        $humedad_huerto,
+        $nivel_deposito_agua,
+        $total_riegos
     )
     {
         // Sentencia INSERT
@@ -136,8 +148,10 @@ class Huerto
             " descripcion," .
             " temperatura_ambiente," .
             " humedad_ambiente," .
-            " huerto_huerto," .                
-            " VALUES( ?,?,?)";
+            " humedad_huerto," . 
+            " nivel_deposito_agua," .
+            " total_riegos," .
+            " VALUES(?,?,?,?,?,?,?,?)";
 
         // Preparar la sentencia
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
@@ -149,7 +163,9 @@ class Huerto
                 $descripcion,
                 $temperatura_ambiente,
                 $humedad_ambiente,
-                $humedad_huerto
+                $humedad_huerto,
+                $nivel_deposito_agua,
+                $total_riegos
             )
         );
 
