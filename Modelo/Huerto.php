@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Representa el la estructura de los huertos
+ * Representa el la estructura de los Huerto
  * almacenadas en la base de datos
  */
 require 'Database.php';
@@ -19,7 +19,7 @@ class Huerto
      * @return array Datos del registro
      */
     public static function getAll(){
-        $consulta = "SELECT * FROM Huertos";
+        $consulta = "SELECT * FROM Huerto";
         try {
             // Preparar sentencia
             $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -45,14 +45,11 @@ class Huerto
         // Consulta del huerto
         $consulta = "SELECT idHuerto,
                             nombre,
-                            localizacion,
-                            descripcion,
-                            temperatura_ambiente,
-                            humedad_ambiente,
-                            humedad_huerto,
-                            nivel_deposito_agua,
-                            total_riegos
-                             FROM Huertos
+                            provincia,
+                            pais,
+                            superficie,
+                            descripcion
+                            FROM Huerto
                              WHERE idHuerto = ?";
 
         try {
@@ -77,41 +74,32 @@ class Huerto
      * en los nuevos valores relacionados con un identificador
      *
      * @param $idHuerto      identificador
-     * @param nombre      nuevo nombre
-     * @param localizacion nueva localización
-     * @param descripcion    nueva descripción
-     * @param temperatura_ambiente temperatura del ambiente en tiempo real
-     * @param humedad_ambiente humedad del ambiente en tiempo real
-     * @param humedad_huerto humedad del huerto en tiempo real
-     * @param nivel_deposito_agua nivel de agua del depósito en tiempo real
-     * @param total_riegos número total de riegos realizados en el huerto en tiempo real
+     * @param $nombre      nuevo nombre
+     * @param $provincia nueva provincia
+     * @param $pais  nuevo pais
+     * @param $superficie  superficie del huerto
+     * @param $descripcion    nueva descripción
      * @return PDOStatement
      */
+    
     public static function update(
         $idHuerto,
         $nombre,
-        $localizacion,
-        $descripcion,
-        $temperatura_ambiente,
-        $humedad_ambiente,
-        $humedad_huerto,
-        $nivel_deposito_agua,
-        $total_riegos
+        $provincia,
+        $pais,
+        $superficie,
+        $descripcion
     ){
         // Creando consulta UPDATE
-        $consulta = "UPDATE Huertos" .
-            " SET nombre=?, localizacion=?, descripcion=?, temperatura_ambiente=?"
-                . ", humedad_ambiente=?, humedad_huerto=?, nivel_deposito_agua=?,"
-                . "total_riegos=?" .
+        $consulta = "UPDATE Huerto" .
+            " SET nombre=?, provincia=?, pais=?, superficie=?, descripcion=?" .
             "WHERE idHuerto=?";
 
         // Preparar la sentencia
         $cmd = Database::getInstance()->getDb()->prepare($consulta);
 
         // Relacionar y ejecutar la sentencia
-        $cmd->execute(array($nombre, $localizacion, $descripcion, $temperatura_ambiente,
-                                $humedad_ambiente, $humedad_huerto, $nivel_deposito_agua,
-                                $total_riegos, $idHuerto));
+        $cmd->execute(array($nombre, $provincia, $pais, $superficie, $descripcion, $idHuerto));
 
         return $cmd;
     }
@@ -121,37 +109,30 @@ class Huerto
      *
      * @param $idHuerto      identificador
      * @param nombre         nuevo nombre
-     * @param localizacion   nueva localización
-     * @param descripcion    nueva descripción
-     * @param temperatura_ambiente temperatura del ambiente en tiempo real
-     * @param humedad_ambiente humedad del ambiente en tiempo real
-     * @param humedad_huerto humedad del huerto en tiempo real
-     * @param nivel_deposito_agua nivel de agua del depósito en tiempo real
-     * @param total_riegos número total de riegos realizados en el huerto en tiempo real
+     * @param $nombre      nuevo nombre
+     * @param $provincia nueva provincia
+     * @param $pais  nuevo pais
+     * @param $superficie  superficie del huerto
+     * @param $descripcion    nueva descripción
      * @return PDOStatement
      */
+    
     public static function insert(
         $nombre,
-        $localizacion,
-        $descripcion,
-        $temperatura_ambiente,
-        $humedad_ambiente,
-        $humedad_huerto,
-        $nivel_deposito_agua,
-        $total_riegos
-    )
+        $provincia,
+        $pais,
+        $superficie,
+        $descripcion
+        )
     {
         // Sentencia INSERT
-        $comando = "INSERT INTO Huertos ( " .
+        $comando = "INSERT INTO Huerto ( " .
             "nombre," .
-            " localizacion," .
+            " provincia," .
+            " pais," .
+            " superficie," .
             " descripcion," .
-            " temperatura_ambiente," .
-            " humedad_ambiente," .
-            " humedad_huerto," . 
-            " nivel_deposito_agua," .
-            " total_riegos," .
-            " VALUES(?,?,?,?,?,?,?,?)";
+            " VALUES(?,?,?,?)";
 
         // Preparar la sentencia
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
@@ -159,13 +140,10 @@ class Huerto
         return $sentencia->execute(
             array(
                 $nombre,
-                $localizacion,
-                $descripcion,
-                $temperatura_ambiente,
-                $humedad_ambiente,
-                $humedad_huerto,
-                $nivel_deposito_agua,
-                $total_riegos
+                $provincia,
+                $pais,
+                $superficie,
+                $descripcion
             )
         );
 
@@ -180,7 +158,7 @@ class Huerto
     public static function delete($idHuerto)
     {
         // Sentencia DELETE
-        $comando = "DELETE FROM Huertos WHERE idHuerto=?";
+        $comando = "DELETE FROM Huerto WHERE idHuerto=?";
 
         // Preparar la sentencia
         $sentencia = Database::getInstance()->getDb()->prepare($comando);

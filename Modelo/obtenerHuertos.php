@@ -1,6 +1,6 @@
 <?php
 /**
- * Obtiene todas las metas de la base de datos
+ * Obtiene todas los huertos de la base de datos
  */
 
 require 'Huerto.php';
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($huertos) {
 
         $datos["estado"] = 1;
-        $datos["huertos"] = $huertos;
+        $datos["huerto"] = $huertos;
 
         print json_encode($datos);
     } else {

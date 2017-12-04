@@ -3,23 +3,23 @@
  * Obtiene todas las riegos de la base de datos
  */
 
-require 'Riegos.php';
+require 'Medicion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     // Manejar petición GET
-    $riegos = Riego::getAll();
+    $mediciones = Medicion::getAll();
 
     if ($riegos) {
 
         $datos["estado"] = 1;
-        $datos["riegos"] = $riegos;
+        $datos["medicion"] = $mediciones;
 
         print json_encode($datos);
     } else {
         print json_encode(array(
             "estado" => 2,
-            "mensaje" => "Ha ocurrido un error al obtener todos los riegos."
+            "mensaje" => "Ha ocurrido un error al obtener todas las mediciones."
         ));
     }
 }

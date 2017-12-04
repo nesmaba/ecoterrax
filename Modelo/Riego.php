@@ -70,7 +70,7 @@ class Riego
             return -1;
         }
     }
-
+   
     /**
      * Actualiza un registro de la bases de datos basado
      * en los nuevos valores relacionados con un identificador
