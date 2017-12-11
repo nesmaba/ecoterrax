@@ -7,7 +7,7 @@
 require 'Medicion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    // Ejemplo de llamada http://localhost/EcoTerraX/Modelo/obtenerDetalleMedicion.php?idHuerto=2
+    // Ejemplo de llamada http://localhost/EcoTerraX/Modelo/obtenerDetalleMedicion.php?idHuerto=1
     if (isset($_GET['idHuerto'])) {
         // print_r($_GET['idHuerto']);
         // Obtener parámetro idHuertos

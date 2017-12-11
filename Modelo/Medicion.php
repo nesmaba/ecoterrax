@@ -45,7 +45,7 @@ class Medicion
         // Consulta de la medicion
         $consulta = "SELECT idMedicion,
                             idHuerto,
-                            tempeAmb,
+                            tempAmb,
                             humAmb,
                             humTierra,
                             fecha,
@@ -89,7 +89,8 @@ class Medicion
                             esRegado
                              FROM Medicion
                              WHERE idHuerto = ? 
-                             HAVING MAX(idMedicion)";
+                             HAVING idMedicion=MAX(idMedicion)";
+        
 
         try {
             // Preparar sentencia
