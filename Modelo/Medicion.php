@@ -81,7 +81,9 @@ class Medicion
     public static function getLastMedicionByIdHuerto($idHuerto)
     {
         // Consulta de la meta
-        $consulta = "SELECT tempAmb,
+        $consulta = "SELECT idMedicion, 
+                            idHuerto,
+                            tempAmb,
                             humAmb,
                             humTierra,                            
                             fecha,
@@ -89,8 +91,8 @@ class Medicion
                             esRegado
                              FROM Medicion
                              WHERE idHuerto = ? 
-                             HAVING idMedicion=MAX(idMedicion)";
-        
+                             and idMedicion = (SELECT max(idMedicion)
+                                		FROM Medicion);";        
 
         try {
             // Preparar sentencia
